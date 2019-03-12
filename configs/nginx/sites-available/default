@@ -51,7 +51,7 @@ server {
 		try_files $uri $uri/ =404;
 	}
 
-	{{ ProxyList }}
+	{{ .ProxyList }}
 
 	# pass PHP scripts to FastCGI server
 	#
