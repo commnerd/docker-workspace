@@ -1,0 +1,15 @@
+<form>
+  <div class="row" *ngFor="let proxy of proxyControls">
+    <div class="form-group col-4">
+      <input type="text" class="form-control" [formControl]="proxy.port"  placeholder="Port (i.e. '82')">
+    </div>
+    <div class="form-group col-4">
+      <input type="text" class="form-control" [formControl]="proxy.env_base_path"  placeholder="Nginx Listen Path (i.e. '/local/path/to/site')">
+    </div>
+    <div class="form-group col-4">
+      <input type="text" class="form-control" [formControl]="proxy.site_base_path"  placeholder="Proxied localhost:<port>[PATH] (i.e. '/site/in/dev/setup')">
+    </div>
+  </div>
+  
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
