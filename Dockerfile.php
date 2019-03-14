@@ -12,6 +12,9 @@ RUN sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/ap
         php7.2-sqlite \
         php7.2-mysql \
         php7.2-mbstring \
+        php7.2-xml \
+        php7.2-curl \
+        php7.2-zip \
         phpunit
 
 RUN curl -sL https://deb.nodesource.com/setup_11.x | bash -
