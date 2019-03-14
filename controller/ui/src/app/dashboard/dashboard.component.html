@@ -1,15 +1,19 @@
 <form [formGroup]="dashboardForm">
-  <div class="row" *ngFor="let proxy of proxyControls" (ngSubmit)="onSubmit()">
-    <div class="form-group col-4">
-      <input type="text" class="form-control" [formControl]="proxy.port"  placeholder="Port (i.e. '82')">
+    <div formArrayName="proxies">
+        <div *ngFor="let proxy of proxies.controls; let i = index;">
+            <div [formGroupName]="i" class="row">
+                <div class="form-group col-4">
+                    <input type="text" class="form-control" formControlName="port"  placeholder="Port (i.e. '82')">
+                </div>
+                <div class="form-group col-4">
+                    <input type="text" class="form-control" formControlName="env_base_path"  placeholder="Nginx Listen Path (i.e. '/local/path/to/site')">
+                </div>
+                <div class="form-group col-4">
+                    <input type="text" class="form-control" formControlName="site_base_path"  placeholder="Proxied to: http://localhost:<port>[THIS]">
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="form-group col-4">
-      <input type="text" class="form-control" [formControl]="proxy.env_base_path"  placeholder="Nginx Listen Path (i.e. '/local/path/to/site')">
-    </div>
-    <div class="form-group col-4">
-      <input type="text" class="form-control" [formControl]="proxy.site_base_path"  placeholder="Proxied to: http://localhost:<port>[THIS]">
-    </div>
-  </div>
-  
-  <button type="submit" class="btn btn-primary">Submit</button>
+
+    <pre>{{ dashboardForm.value | json }}</pre>
 </form>
