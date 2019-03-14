@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core'
-import { FormControl } from '@angular/forms'
+import { FormBuilder } from '@angular/forms'
+
 import { Proxy } from '../models/proxy'
 
 @Component({
@@ -9,9 +10,15 @@ import { Proxy } from '../models/proxy'
 })
 export class DashboardComponent implements OnInit {
 
-  proxyControls: Array<Object>
+  dashboardForm = this._fb.group({
+    proxies: this.fb.array({
+      port: new FormControl(proxy.port),
+      env_base_path: new FormControl(proxy.env_base_path),
+      site_base_path: new FormControl(proxy.site_base_path)
+    })
+  })
 
-  constructor() {}
+  constructor(private _fb: FormBuilder) {}
 
   ngOnInit() {
   	this.proxyControls = []
@@ -19,11 +26,7 @@ export class DashboardComponent implements OnInit {
   }
 
   addProxy(proxy: Proxy) {
-  	let control = {
-  		port: new FormControl(proxy.port),
-  		env_base_path: new FormControl(proxy.env_base_path),
-  		site_base_path: new FormControl(proxy.site_base_path)
-  	}
+  	let control = 
   	this.proxyControls.push(control)
   }
 
