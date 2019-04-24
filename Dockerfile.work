@@ -1,0 +1,3 @@
+FROM commnerd/workspace:php
+
+RUN sudo -u commnerd git config --global user.name "Michael J. Miller" && sudo -u commnerd git config --global user.email "mmiller@franklinenergy.com"

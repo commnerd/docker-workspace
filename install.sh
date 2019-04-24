@@ -5,8 +5,10 @@ TERMINAL_TOOL=""
 NETWORK=""
 PORTS="-p 80:80"
 NAME="--name workspace"
+VERSION="latest"
+if [ "$1" ]; then VERSION="$1"; fi
 VOLUMES="-v ${HOME}/Workspace:/home/commnerd/Workspace -v ${HOME}/.ssh:/root/.ssh -v /var/run/docker.sock:var/run/host.docker.sock"
-IMAGE="commnerd/workspace:work"
+IMAGE="commnerd/workspace:${VERSION}"
 
 case "$OSTYPE" in
 "linux-gnu")

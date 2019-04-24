@@ -14,8 +14,7 @@ RUN sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/ap
         php7.2-mbstring \
         php7.2-xml \
         php7.2-curl \
-        php7.2-zip \
-        phpunit
+        php7.2-zip
 
 RUN curl -sL https://deb.nodesource.com/setup_11.x | bash -
 
@@ -26,6 +25,9 @@ RUN npm i -g yarn n && n latest
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
     sudo php composer-setup.php --filename=composer --install-dir=/usr/bin && \
     php -r "unlink('composer-setup.php');"
+
+RUN composer global require phpunit/phpunit && \
+    echo "export PATH=./bin:./vendor/bin:~/.composer/vendor/bin:\$PATH" > ~/.bashrc
 
 EXPOSE 80 9000
 
