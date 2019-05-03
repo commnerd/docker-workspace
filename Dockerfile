@@ -61,4 +61,6 @@ ADD configs/supervisor/conf.d/* /etc/supervisor/conf.d/
 
 EXPOSE 80
 
+USER commnerd
+
 CMD ["supervisord", "-nc", "/etc/supervisor/supervisord.conf"]

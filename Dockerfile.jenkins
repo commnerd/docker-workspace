@@ -1,13 +1,15 @@
-FROM commnerd/workspace
+FROM jenkins/jenkins:lts
 
 USER root
 
-RUN sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg && \
-    sudo sh -c 'echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list' && \
+RUN wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg && \
     apt-get update && \
+    apt-get install -y lsb-release apt-transport-https ca-certificates && \
     apt-get upgrade -y && \
+    sh -c 'echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list' && \
+    apt-get update && \
     apt-get install -y \
-	php7.2 \
+        php7.2 \
         php7.2-common \
         php7.2-cli \
         php7.2-fpm \
@@ -22,17 +24,14 @@ RUN curl -sL https://deb.nodesource.com/setup_11.x | bash -
 
 RUN apt-get install -y nodejs
 
-RUN npm i -g yarn n && n latest
+RUN npm i -g yarn n cross-env && n latest
 
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
-    sudo php composer-setup.php --filename=composer --install-dir=/usr/bin && \
+    php composer-setup.php --filename=composer --install-dir=/usr/bin && \
     php -r "unlink('composer-setup.php');"
 
-USER commnerd
+USER jenkins
 
 RUN composer global require phpunit/phpunit && \
     echo "export PATH=./bin:./vendor/bin:~/.composer/vendor/bin:\$PATH" >> ~/.bashrc
 
-EXPOSE 80 9000
-
-CMD ["supervisord", "-nc", "/etc/supervisor/supervisord.conf"]
