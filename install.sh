@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DEST="${HOME}/.bash_profile"
+DEST="${HOME}/.docker-workspace"
 TERMINAL_TOOL=""
 NETWORK=""
 PORTS=" -p 80:80"
@@ -9,6 +9,14 @@ VERSION="latest"
 if [ "$1" ]; then VERSION="$1"; fi
 VOLUMES=" -v ${HOME}/Workspace:/home/commnerd/Workspace -v ${HOME}/.ssh:/root/.ssh -v /var/run/docker.sock:/var/run/host.docker.sock"
 IMAGE=" commnerd/workspace:${VERSION}"
+
+install_to_dest() {
+    if [ ! "$(grep ${DEST} ${1})" ]
+    then
+        echo ". ${DEST}" >> ${1}
+        exit
+    fi
+}
 
 case "$OSTYPE" in
 "linux-gnu")
@@ -25,5 +33,15 @@ case "$OSTYPE" in
     ;;
 esac
 
-echo "alias run-workspace='docker run -d --privileged --restart always ${NETWORK}${NAME}${PORTS}${VOLUMES}${IMAGE}'" >> ${DEST}
+echo "alias run-workspace='docker run -d --privileged --restart always ${NETWORK}${NAME}${PORTS}${VOLUMES}${IMAGE}'" > ${DEST}
 echo "alias workspace='${TERMINAL_TOOL}docker exec -it -u commnerd --workdir //home/commnerd workspace bash'" >> ${DEST}
+
+if [ -f ${HOME}/.bash_profile ]
+then
+    install_to_dest ${HOME}/.bash_profile
+fi
+
+if [ -f ${HOME}/.bashrc ]
+then
+    install_to_dest ${HOME}/.bashrc
+fi

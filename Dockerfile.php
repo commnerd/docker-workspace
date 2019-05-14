@@ -28,8 +28,6 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
     sudo php composer-setup.php --filename=composer --install-dir=/usr/bin && \
     php -r "unlink('composer-setup.php');"
 
-USER commnerd
-
 RUN composer global require phpunit/phpunit && \
     echo "export PATH=./bin:./vendor/bin:~/.composer/vendor/bin:\$PATH" >> ~/.bashrc
 
