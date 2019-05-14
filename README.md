@@ -26,3 +26,8 @@ or
 or
 
 `./connect.sh`
+
+## There is an installation script that installs the following commands:
+
+`run-workspace`: Kicks off the docker run process for the workspace
+`workspace`: Connects to the workspace from the host
